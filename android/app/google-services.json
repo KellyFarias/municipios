@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "669164268087",
+    "firebase_url": "https://municipiosyriesgos.firebaseio.com",
+    "project_id": "municipiosyriesgos",
+    "storage_bucket": "municipiosyriesgos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669164268087:android:3f6b665db2890c53c06db2",
+        "android_client_info": {
+          "package_name": "com.example.municipios"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "669164268087-bv1ft49qhkc5qbmc15vuj0pii3p082r9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.municipios",
+            "certificate_hash": "e6fbf925024c7a978319883e4190657c5329150a"
+          }
+        },
+        {
+          "client_id": "669164268087-9fpffq87e54c95sbfg7pd6h8380brkgh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArDzpWu9b4_Clxt1dC-sEuUN6PKPdB04E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "669164268087-9fpffq87e54c95sbfg7pd6h8380brkgh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
