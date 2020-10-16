@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:municipios/screens/Home/details_page.dart';
+import 'package:municipios/screens/Home/onlyadmin.dart';
 
 class ListPage extends StatefulWidget {
   DatabaseReference _municipioRef;
@@ -23,9 +25,12 @@ class _ListPage extends State<ListPage> {
   StreamSubscription<Event> _counterSubscription;
   StreamSubscription<Event> _messagesSubscription;
 
+  TextEditingController _controller;
+
   @override
   void initState() {
     super.initState();
+
     // Demonstrates configuring to the database using a file
     //_counterRef = FirebaseDatabase.instance.reference().child('counter');
     // Demonstrates configuring the database directly
@@ -86,7 +91,7 @@ class _ListPage extends State<ListPage> {
       return mutableData;
     });
 
-    if (transactionResult.committed) {
+    if (!transactionResult.committed) {
       //_messagesRef.push().set(<String, String>{'Usuario': _kTestKey});
       _municipiosRef.push().set(<String, String>{
         'Clave': munClave,
@@ -117,11 +122,11 @@ class _ListPage extends State<ListPage> {
       ),
       body: Column(
         children: <Widget>[
-          Flexible(
+          /*Flexible(
             child: Center(
               child: Text('Ingrese los datos del municipio'),
             ),
-          ),
+          ),*/
           Flexible(
             child: FirebaseAnimatedList(
               key: ValueKey<bool>(_anchorToBottom),
@@ -138,10 +143,32 @@ class _ListPage extends State<ListPage> {
                     leading: IconButton(
                       onPressed: () => _municipiosRef
                           .child(snapshot.key)
-                          .update(
-                              <String, String>{'Usuario': 'Sustituir AQUI'}),
+                          .update(<String, String>{
+                        'Clave': munClave,
+                        'Nombre': munNombre,
+                        'Altitud': munAltitud,
+                        'Cabecera Municipal': munCabecera,
+                        'Principales Aspectos': munAspectos,
+                        'Significado': munSignificado,
+                        'Superficie': munSuperficie,
+                      }),
                       icon: Icon(Icons.edit),
                     ),
+                    onTap: () {
+                      /*Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsPage(keya: munClave),
+                        ),
+                      );*/
+                      _controller = new TextEditingController(text: munClave);
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text('Ingrese los nuevos valores'),
+                      ));
+                      munClave = snapshot.key;
+                      //munNombre = snapshot.value.toString();
+                    },
+
                     trailing: IconButton(
                       onPressed: () =>
                           _municipiosRef.child(snapshot.key).remove(),
@@ -160,6 +187,7 @@ class _ListPage extends State<ListPage> {
             ),
           ),
           TextField(
+            controller: _controller,
             decoration: InputDecoration(
               hintText: "Clave",
               hintStyle:
@@ -267,8 +295,8 @@ class _ListPage extends State<ListPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        //onPressed: _increment,
-        //tooltip: 'Increment',
+        onPressed: _increment,
+        tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
     );

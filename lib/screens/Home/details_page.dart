@@ -1,26 +1,60 @@
 import 'dart:async';
-import 'dart:io' show Platform;
 
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/material.dart';
+import 'package:municipios/screens/Home/onlyadmin.dart';
 
-class AddPage extends StatefulWidget {
+class DetailsPage extends StatefulWidget {
+  DatabaseReference _municipioRef;
+
   /// The page title.
-  AddPage({this.app});
+  DetailsPage({this.app, this.keya});
   final FirebaseApp app;
+  final String keya;
   //final String title = 'Sign In & Out';
 
   @override
-  State<StatefulWidget> createState() => _AddPage();
+  State<StatefulWidget> createState() => _DetailsPage();
 }
 
-class _AddPage extends State<AddPage> {
+class _DetailsPage extends State<DetailsPage> {
   int _counter;
-  DatabaseReference municipios;
+  DatabaseReference _municipiosRef;
   StreamSubscription<Event> _counterSubscription;
   StreamSubscription<Event> _messagesSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+
+    print('La cve es ' + widget.keya);
+    // Demonstrates configuring to the database using a file
+    //_counterRef = FirebaseDatabase.instance.reference().child('counter');
+    // Demonstrates configuring the database directly
+    final FirebaseDatabase database = FirebaseDatabase(app: widget.app);
+    _municipiosRef = database.reference().child('municipios');
+
+    database
+        .reference()
+        .child('municipios')
+        .once()
+        .then((DataSnapshot snapshot) {
+      print('Connected to second database and read ${snapshot.value}');
+    });
+    database.setPersistenceEnabled(true);
+    database.setPersistenceCacheSizeBytes(10000000);
+
+    _messagesSubscription =
+        _municipiosRef.limitToLast(10).onChildAdded.listen((Event event) {
+      print('Child added: ${event.snapshot.value}');
+    }, onError: (Object o) {
+      final DatabaseError error = o;
+      print('Error: ${error.code} ${error.message}');
+    });
+  }
+
   bool _anchorToBottom = false;
   String munClave,
       munNombre,
@@ -31,20 +65,20 @@ class _AddPage extends State<AddPage> {
       munAspectos;
   DatabaseError _error;
 
-  @override
+  /* @override
   void initState() {
     super.initState();
     // Demonstrates configuring to the database using a file
     //_counterRef = FirebaseDatabase.instance.reference().child('municipios');
     // Demonstrates configuring the database directly
     final FirebaseDatabase database = FirebaseDatabase(app: widget.app);
-    municipios = database.reference().child('municipios');
+    _municipiosRef= database.reference().child('municipios');
     database.reference().child('counter').once().then((DataSnapshot snapshot) {
       print('Connected to second database and read ${snapshot.value}');
     });
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);
-  }
+  }*/
 
   @override
   void dispose() {
@@ -56,15 +90,14 @@ class _AddPage extends State<AddPage> {
   Future<void> _increment() async {
     // Increment counter in transaction.
     final TransactionResult transactionResult =
-        await municipios.runTransaction((MutableData mutableData) async {
+        await _municipiosRef.runTransaction((MutableData mutableData) async {
       mutableData.value = (mutableData.value ?? 0) + 1;
       return mutableData;
     });
 
     if (!transactionResult.committed) {
       //_messagesRef.push().set(<String, String>{'Usuario': _kTestKey});
-      //municipios.set(<String>{munClave});
-      municipios.child(munClave).set(<String, String>{
+      _municipiosRef.push().set(<String, String>{
         'Clave': munClave,
         'Nombre': munNombre,
         'Significado': munSignificado,
@@ -93,11 +126,12 @@ class _AddPage extends State<AddPage> {
       ),
       body: Column(
         children: <Widget>[
-          Flexible(
+          /*Flexible(
             child: Center(
               child: Text('Ingrese los datos del municipio'),
             ),
-          ),
+          ),*/
+
           TextField(
             decoration: InputDecoration(
               hintText: "Clave",

@@ -21,7 +21,6 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         backgroundColor: Colors.purple,
         title: Text('Login Proyect 1'),
-       
       ),
       body: Builder(builder: (BuildContext context) {
         return ListView(
@@ -29,19 +28,15 @@ class _LoginState extends State<Login> {
           scrollDirection: Axis.vertical,
           children: <Widget>[
             _EmailPasswordForm(),
-           // _EmailLinkSignInSection(),
-           // _AnonymouslySignInSection(),
-           // _PhoneSignInSection(Scaffold.of(context)),
-           // _OtherProvidersSignInSection(),
+            // _EmailLinkSignInSection(),
+            // _AnonymouslySignInSection(),
+            // _PhoneSignInSection(Scaffold.of(context)),
+            // _OtherProvidersSignInSection(),
           ],
         );
       }),
-
     );
   }
-
- 
-   
 }
 
 class _EmailPasswordForm extends StatefulWidget {
@@ -96,32 +91,31 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                     text: "Sign In",
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        AuthService serviceauth=new AuthService();
-                        dynamic result=await serviceauth.signInWithEmailAndPassword( _emailController.text, _passwordController.text);
-                        if(result.user.email !=null)
-                        {
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text( result.user.email +"signed in"),
-                          ));
-                          String isAdmin= await DbUsuarios().isAdmin(result.user.uid);
-                          print(isAdmin);
-                                    if(isAdmin.compareTo("Administrador")==0)  
-                                    {             
-                                    print("Page Admin");
-                                    _pushPage(context, OnlyAdmin());
-                                    }
-                                    else{
-                                      print("Page Home");
-                                      _pushPage(context,Home() );  
-                                }
-
-
-                        }
-                        else{
+                        AuthService serviceauth = new AuthService();
+                        dynamic result =
+                            await serviceauth.signInWithEmailAndPassword(
+                                _emailController.text,
+                                _passwordController.text);
+                        if (result.user.email != null) {
                           Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text("Failed to sign in with Email & Password"),
-                            ));
-                        }                        
+                            content: Text(result.user.email + " signed in"),
+                          ));
+                          String isAdmin =
+                              await DbUsuarios().isAdmin(result.user.uid);
+                          print(isAdmin);
+                          if (isAdmin.compareTo("Administrador") == 0) {
+                            print("Page Admin");
+                            _pushPage(context, OnlyAdmin());
+                          } else {
+                            print("Page Home");
+                            _pushPage(context, Home());
+                          }
+                        } else {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content:
+                                Text("Failed to sign in with Email & Password"),
+                          ));
+                        }
                       }
                     },
                   ),
@@ -133,26 +127,24 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                     Buttons.Email,
                     text: "Registro",
                     onPressed: () async {
-                                             
                       _pushPage(context, RegisterPage());
                     },
                   ),
                 ),
-                
               ],
             ),
           ),
         ));
   }
-@override
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-     
- void _pushPage(BuildContext context, Widget page) {
+  void _pushPage(BuildContext context, Widget page) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(builder: (_) => page),
     );
