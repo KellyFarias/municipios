@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:municipios/modelos/municipio.dart';
 import 'package:municipios/screens/Authenticate/registro.dart';
-import 'package:municipios/screens/Home/onlyadmin.dart';
-import 'package:municipios/screens/Home/principal.dart';
+import 'package:municipios/screens/Home/Administrador/onlyadmin.dart';
+import 'package:municipios/screens/Home/General/principal.dart';
 import 'package:municipios/servicios/auth.dart';
 import 'package:municipios/servicios/database/db_usuarios.dart';
 
@@ -105,10 +106,10 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                           print(isAdmin);
                           if (isAdmin.compareTo("Administrador") == 0) {
                             print("Page Admin");
-                            _pushPage(context, OnlyAdmin());
+                            _pushPage(context, ListViewMunicipiosAdmin());
                           } else {
                             print("Page Home");
-                            _pushPage(context, Home());
+                            _pushPage(context, ListViewMunicipios());
                           }
                         } else {
                           Scaffold.of(context).showSnackBar(SnackBar(

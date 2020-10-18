@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:municipios/screens/Authenticate/login.dart';
-import 'package:municipios/screens/Home/principal.dart';
+import 'package:municipios/screens/Home/General/principal.dart';
 
 class Wrapper extends StatelessWidget {
   
