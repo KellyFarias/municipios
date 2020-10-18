@@ -94,6 +94,7 @@ class _MunicipioScreenState extends State<MunicipioScreen> {
     _latitudController=new TextEditingController(text: widget.municipio.latitud);
     _longitudController=new TextEditingController(text: widget.municipio.longitud); 
     nuevo=  widget.municipio.clave.toString();
+    print('clave es:'+nuevo);
   //productImage = widget.product.productImage;
    // print(productImage);
 
@@ -116,6 +117,7 @@ class _MunicipioScreenState extends State<MunicipioScreen> {
             child: Column(
               children: <Widget>[
                 TextField(
+                  
                   style:
                       TextStyle(fontSize: 17.0, color: Colors.deepOrangeAccent),
                   decoration: InputDecoration(
@@ -313,9 +315,9 @@ class _MunicipioScreenState extends State<MunicipioScreen> {
                 FlatButton(
                     onPressed: () {
                       //nuevo imagen
-                      if (widget.municipio.clave != null) {
+                      if (widget.municipio.clave == null) {
                         
-                        municipioReference.child(widget.municipio.clave).set({
+                        municipioReference.child(_claveController.text).set({
                           'nombre': _nombreController.text,
                           'significado': _significadoController.text,
                           'cabecera': _cabeceraController.text,
@@ -360,9 +362,10 @@ class _MunicipioScreenState extends State<MunicipioScreen> {
                         });
                       }
                     },
-                    child: (nuevo!= ''||nuevo!= null)
-                        ? Text('Update')
-                        : Text('Add')),
+                    child: (widget.municipio.clave!= null)
+                        ? Text('Editar')
+                        : Text('Agregar')),
+                        
               ],
             ),
           ),

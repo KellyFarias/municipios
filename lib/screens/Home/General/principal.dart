@@ -13,21 +13,21 @@ final municipioReference = FirebaseDatabase.instance.reference().child('municipi
 
 class _ListViewMunicipiosState extends State<ListViewMunicipios> {
   List<Municipios> items;
-  //StreamSubscription<Event> _onMunicipiosAddSusc;
+  StreamSubscription<Event> _onMunicipiosAddSusc;
   //StreamSubscription<Event> _onMunicipiosEditSusc;
 
   @override
   void initState() {
     super.initState();
     items = new List();
-    //_onMunicipiosAddSusc =municipioReference.onChildAdded.listen(_onMunicipiosAdded);
+    _onMunicipiosAddSusc =municipioReference.onChildAdded.listen(_onMunicipiosAdded);
     //_onMunicipiosEditSusc = municipioReference.onChildChanged.listen(_onMunicipiosUpdate);
   }
 
   @override
   void dispose() {
     super.dispose();
-    //_onMunicipiosAddSusc.cancel();
+    _onMunicipiosAddSusc.cancel();
     //_onMunicipiosEditSusc.cancel();
   }
 
@@ -142,11 +142,11 @@ class _ListViewMunicipiosState extends State<ListViewMunicipios> {
     );
   }*/
 
- /* void _onProductAdded(Event event) {
+ void _onMunicipiosAdded(Event event) {
     setState(() {
       items.add(new Municipios.fromSnapShot(event.snapshot));
     });
-  }*/
+  }
 
   /*void _onProductUpdate(Event event) {
     var oldMunicipioValue =

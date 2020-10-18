@@ -310,60 +310,7 @@ class _MunicipioScreenGenState extends State<MunicipioScreenGen> {
                   padding: EdgeInsets.only(top: 1.0),
                 ),
                 Divider(),
-                FlatButton(
-                    onPressed: () {
-                      //nuevo imagen
-                      if (widget.municipio.clave != null) {
-                        
-                        municipioReference.child(widget.municipio.clave).set({
-                          'nombre': _nombreController.text,
-                          'significado': _significadoController.text,
-                          'cabecera': _cabeceraController.text,
-                          'superficie': _superficieController.text,
-                          'altitud': _altitudController.text,
-                          'elevacion': _elevacionController.text,
-                          'riocanal': _rioController.text,
-                          'cuerpoagua': _cuerpoaguaController.text,
-                          'maspoblado': _maspobladoController.text,
-                          'masextenso': _masextensoController.text,
-                          'menospoblado': _menospobladoController.text,
-                          'industrializado': _industrializadosController.text,
-                          'clima': _climaController.text,
-                          'latitud': _latitudController.text,
-                          'longitud': _longitudController.text,
-                          
-                          
-                        }).then((_) {
-                          Navigator.pop(context);
-                        });
-                      } else {
-                       
-
-                        municipioReference.push().set({
-                          'nombre': _nombreController.text,
-                          'significado': _significadoController.text,
-                          'cabecera': _cabeceraController.text,
-                          'superficie': _superficieController.text,
-                          'altitud': _altitudController.text,
-                          'elevacion': _elevacionController.text,
-                          'riocanal': _rioController.text,
-                          'cuerpoagua': _cuerpoaguaController.text,
-                          'maspoblado': _maspobladoController.text,
-                          'masextenso': _masextensoController.text,
-                          'menospoblado': _menospobladoController.text,
-                          'industrializado': _industrializadosController.text,
-                          'clima': _climaController.text,
-                          'latitud': _latitudController.text,
-                          'longitud': _longitudController.text,
-                        }).then((_) {
-                          Navigator.pop(context);
-                        });
-                      }
-                    },
-                    child: (nuevo!= ''||nuevo!= null)
-                        ? Text('Update')
-                        : Text('Add')),
-              ],
+             ],
             ),
           ),
         ),

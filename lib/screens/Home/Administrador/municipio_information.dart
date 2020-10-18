@@ -32,8 +32,9 @@ class _MunicipioInfomationState extends State<MunicipioInfomation> {
         title: Text('Municipio Information'),
         backgroundColor: Colors.purpleAccent,
       ),
-      body: Container(
-        height: 800.0,
+      //resizeToAvoidBottomInset: false,
+      body: SingleChildScrollView(
+        //height: 800.0,
         padding: const EdgeInsets.all(20.0),
         child: Card(
           child: Center(

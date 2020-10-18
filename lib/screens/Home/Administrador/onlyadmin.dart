@@ -11,6 +11,7 @@ class ListViewMunicipiosAdmin extends StatefulWidget {
 }
 
 final municipioReference = FirebaseDatabase.instance.reference().child('municipios');
+final riesgoReference = FirebaseDatabase.instance.reference().child('riesgos');
 
 class _ListViewMunicipiosAdminState extends State<ListViewMunicipiosAdmin> {
   List<Municipios> items;
@@ -148,6 +149,26 @@ class _ListViewMunicipiosAdminState extends State<ListViewMunicipiosAdmin> {
       items.add(new Municipios.fromSnapShot(event.snapshot));
     });
   }
+  void _onSearchByMunicipio(Event event,String municip) {
+    setState(() {
+      municipioReference.child('nombre').equalTo(municip).once().then((DataSnapshot snapshot)
+      {
+        items.add(new Municipios.fromSnapShot(snapshot));
+      });
+     
+    });
+  }
+  void _onSearchByZonaRiesgo(Event event,String clave) {
+    setState(() {
+      riesgoReference.child('clave').equalTo(clave).once().then((DataSnapshot snapshot)
+      {
+        items.add(new Municipios.fromSnapShot(snapshot));
+      });
+     
+    });
+  }
+  
+  
 
   void _onMunicipioEdit(Event event) {
     var oldMunicipioValue =
