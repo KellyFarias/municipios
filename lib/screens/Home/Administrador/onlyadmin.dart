@@ -15,17 +15,23 @@ final riesgoReference = FirebaseDatabase.instance.reference().child('riesgos');
 
 class _ListViewMunicipiosAdminState extends State<ListViewMunicipiosAdmin> {
   List<Municipios> items;
+  List<Municipios> visibleitems;
   StreamSubscription<Event> _onMunicipiosAddSusc;
   StreamSubscription<Event> _onMunicipiosEditSusc;
+  final key = GlobalKey<ScaffoldState>();
+  final TextEditingController _searchQueryController = TextEditingController();
 
   @override
   void initState() {
-    super.initState();
+    
     items = new List();
     _onMunicipiosAddSusc =
         municipioReference.onChildAdded.listen(_onMunicipioAdded);
     _onMunicipiosEditSusc =
         municipioReference.onChildChanged.listen(_onMunicipioEdit);
+    visibleitems=items;
+    super.initState(); 
+  
   }
 
   @override
@@ -51,6 +57,36 @@ class _ListViewMunicipiosAdminState extends State<ListViewMunicipiosAdmin> {
               itemBuilder: (context, position) {
                 return Column(
                   children: <Widget>[
+                    SizedBox(height: 110.0,),
+                    Padding(
+                      padding: EdgeInsets.only(left: 12.0,right: 12.0),
+                      child: Material(
+                        elevation: 5.0,
+                        borderRadius: BorderRadius.circular(30.0),
+                        child: TextField(
+                          onChanged: (value){
+                            filter(value);
+                            print(value);
+                          },
+                          controller: _searchQueryController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Colors.purple,
+                              size: 25.0),
+                              contentPadding: EdgeInsets.only(left: 10.0,top: 12.0),
+                              hintText: 'Busca Municipio',
+                              hintStyle: TextStyle(
+                              color: Colors.blue,
+                              fontFamily: 'Arial'
+
+                              )
+                          ),
+                        ),
+                      ),
+                      ),
+                    
                     Divider(
                       height: 1.0,
                     ),                    
@@ -62,14 +98,14 @@ class _ListViewMunicipiosAdminState extends State<ListViewMunicipiosAdmin> {
                             Expanded(
                               child: ListTile(
                                   title: Text(
-                                    '${items[position].nombre}',
+                                    '${visibleitems[position].nombre}',
                                     style: TextStyle(
                                       color: Colors.blueAccent,
                                       fontSize: 21.0,
                                     ),
                                   ),
                                   subtitle: Text(
-                                    '${items[position].significado}',
+                                    '${visibleitems[position].significado}',
                                     style: TextStyle(
                                       color: Colors.blueGrey,
                                       fontSize: 21.0,
@@ -114,6 +150,17 @@ class _ListViewMunicipiosAdminState extends State<ListViewMunicipiosAdmin> {
       ),
     );
   }
+
+  void filter(String query)
+  {
+    setState
+    Iterable<Municipios> nomMunicipio=items.where((municipio)=>items.nombre.contains(query)).tolist();
+    nomMunicipio.forEach((municipio)=> );
+
+  }
+
+ 
+  
 
   //nuevo para que pregunte antes de eliminar un registro
   void _showDialog(context, position) {
