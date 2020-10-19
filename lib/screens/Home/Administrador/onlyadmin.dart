@@ -153,8 +153,8 @@ class _ListViewMunicipiosAdminState extends State<ListViewMunicipiosAdmin> {
 
   void filter(String query)
   {
-    setState
-    Iterable<Municipios> nomMunicipio=items.where((municipio)=>items.nombre.contains(query)).tolist();
+    //setState
+    Iterable<Municipios> nomMunicipio=items.where((municipio)=>items.nombre.contains(query)).toList();
     nomMunicipio.forEach((municipio)=> );
 
   }
