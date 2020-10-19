@@ -101,7 +101,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                           Scaffold.of(context).showSnackBar(SnackBar(
                             content: Text(result.user.email + " signed in"),
                           ));
-                          String isAdmin =
+                           String isAdmin =
                               await DbUsuarios().isAdmin(result.user.uid);
                           print(isAdmin);
                           if (isAdmin.compareTo("Administrador") == 0) {
@@ -111,6 +111,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                             print("Page Home");
                             _pushPage(context, ListViewMunicipios());
                           }
+                         
                         } else {
                           Scaffold.of(context).showSnackBar(SnackBar(
                             content:
